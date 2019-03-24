@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.aftertomorrow.dao.ArticleDao">
+	<select id="findArticleById" parameterType="Integer" resultType="article">
+		select *
+		from article
+		where id=#{id}
+	</select>
+	<insert id="addArticle" parameterType="article">
+		insert into
+		article(title,detail,text,view,tag,time)
+		values(#{title},#{detail},#{text},#{view},#{tag},#{time})
+	</insert>
+	<select id="listAll" resultType="article">
+		select * 
+		from article 
+		order by id desc
+	</select>
+	<select id="listAllWithTag" resultType="article">
+		select a.*,t.unicode,t.name
+		from article a, tag t
+		where a.tag like concat("%",t.name,"%")
+		order by id desc
+	</select>
+	<select id="findByPage" parameterType="page" resultType="article">
+		select *
+		from article
+		order by id desc
+		limit #{start},#{size}
+	</select>
+</mapper>
